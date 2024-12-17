@@ -1,0 +1,7 @@
+node_modules/
+dist/
+
+# Other common ignores
+.DS_Store
+.env
+*.log
