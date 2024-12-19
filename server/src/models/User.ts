@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   gender: { type: String, required: false, default: "" },
   avatar: { type: String, required: false },
   credits: { type: Number, required: true, default: 300 },
-  clerkId: { type: String, required: true }
+  userId: { type: String, required: true, unique: true }
 });
 
 export default mongoose.model('User', userSchema);

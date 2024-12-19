@@ -1,11 +1,12 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
+import SidebarLayoutComp from '@/layouts/SidebarLayout'
+import HomeToolMenu from './_features/home/HomeToolMenu'
 
 export default function Home() {
-  const { user } = useUser()
-
-  console.log(user)
-
-  return <></>
+  return (
+    <SidebarLayoutComp>
+      <HomeToolMenu />
+    </SidebarLayoutComp>
+  )
 }

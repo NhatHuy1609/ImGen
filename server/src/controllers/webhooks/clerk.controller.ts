@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import User from "models/User.js";
+import { pino } from 'pino'
+
+const logger = pino()
 
 export const handleClerkWebhook = async (req: Request, res: Response) => {
   try {
@@ -33,7 +36,7 @@ const handleCreateUser = async (data: {[key: string]: any}) => {
 
   try {
     const newUser = new User({
-      clerkId: id,
+      userId: id,
       name: `${last_name} ${first_name}`,
       email: email_addresses[0]['email_address'],
       avatar: image_url,
@@ -43,6 +46,7 @@ const handleCreateUser = async (data: {[key: string]: any}) => {
     console.log("User added:", savedUser);
   } catch (error) {
     console.error("Error adding user:", error)
+    logger.error(`Error when creating new user: ${(error as Error).message}`)
   }
 }
 

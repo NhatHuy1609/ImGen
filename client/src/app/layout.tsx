@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Toaster } from '@/components/ui/sonner'
+import RootLayoutComp from '@/layouts/RootLayout'
 import './globals.css'
-import RootLayoutComp from '@/layouts/RootLayoutComp'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,9 +17,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' className='dark'>
       <body className={inter.className}>
         <RootLayoutComp>{children}</RootLayoutComp>
+        <Toaster />
       </body>
     </html>
   )

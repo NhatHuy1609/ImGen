@@ -1,11 +1,13 @@
 // @ts-nocheck
-import apiRoutes from './routes/api/index.js';
-import webhookRoutes from './routes/webhooks/index.js'
+import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import swaggerUI from 'swagger-ui-express';
-import swaggerJsDoc from 'swagger-jsdoc';
 import express from 'express';
+import connectDB from './config/db.js';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
+import apiRoutes from './routes/api/index.js';
+import { clerkMiddleware } from '@clerk/express';
+import webhookRoutes from './routes/webhooks/index.js'
 
 dotenv.config();
 
@@ -34,7 +36,16 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
+app.use(clerkMiddleware())
+
 app.use(express.json());
+
+// Configure CORS with specific options
+app.use(cors({
+  origin: 'https://localhost:3000', // Replace with your client's URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Api Routes
 app.use('/api', apiRoutes);

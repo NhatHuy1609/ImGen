@@ -1,22 +1,13 @@
 import express from 'express'
+import { requireAuth } from '@clerk/express';
+import { 
+  getUserById ,
+  getLoggedInUser
+} from 'controllers/api/users.controller.js';
 
 const router = express.Router();
-import { getAllUsers } from 'controllers/api/users.controller.js';
 
-/**
- * @swagger
- * /api/users/all:
- *   get:
- *     tags: [Users]
- *     summary: Get all users
- *     responses:
- *       200:
- *         description: A successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: string
- */
-router.get('/users/all/:id', getAllUsers);
+router.get('/users/me', requireAuth(), getLoggedInUser)
+router.get('/users/:id', requireAuth(), getUserById)
 
 export default router;
